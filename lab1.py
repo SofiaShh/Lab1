@@ -5,6 +5,8 @@ import math
 # 1. Найти корни квадратного уравнения ax^2 + bx + c (math.sqrt)
 
 def quadratic_equation(a, b, c):
+    if a == 0 or c == 0:
+        return "Ошибка: a и c не должны быть равны нулю"
     discriminant = b**2 - 4*a*c
     if discriminant < 0:
         return "Дискриминант меньше 0, корней нет"
@@ -16,9 +18,9 @@ def quadratic_equation(a, b, c):
         root2 = (-b - math.sqrt(discriminant)) / (2*a)
         return f"Два корня: {root1}, {root2}"
     
-print(quadratic_equation(1, -5, 6))  
+print(quadratic_equation(0, -5, 6))  
 print(quadratic_equation(1, -4, 4))  
-print(quadratic_equation(1, 5, 6))   
+print(quadratic_equation(1, 5, 6)) 
 
 # 2. Найти площадь круга (from math import pi)
     
@@ -139,18 +141,18 @@ with open('freshman_kgs.csv', mode = 'r') as file: # Открываем файл
     csv_reader = csv.reader(file) # Создаем объект csv_reader, который будет читать файл file
     header = next(csv_reader) # Считываем заголовки столбцов и сохраняем их в переменной header
 
-    with open ('result_kgs.csv', mode = 'w', newline='') as out_file: # Открываем новый файл 'result_kgs.csv' в режиме записи (mode = 'w') и с параметром newline='', который удаляет пустые строки между записями. Назначаем ему переменную out_file
-        csv_writer = csv.writer(out_file) # Создаем объект csv_writer, который будет записывать данные в файл out_file
-        csv_writer.writerow(header + ['Wight diff']) # Записываем в файл out_file заголовки столбцов из переменной header, добавляя новый столбец 'Wight diff' с помощью метода writerow()
-
-        for i in csv_reader: # Цикл for читает каждую строку из file
+    for i in csv_reader: # Цикл for читает каждую строку из file
             sex=i[0] # Берем значение пола из 1 столбца строки i и сохраняем его в переменной sex
             weight_diff=int(i[1])-int(i[2]) # Вычисляем разницу в весе между сентябрем и апрелем, вычитая значение веса в апр. (2 столбец строки i) из значения веса в сент. (1 столбец строки i) и сохраняем результат в weight_diff
             bmi=float(i[4]) # Берем значение в апреле из 5 столбца строки i и сохраняем его в bmi
 
-            if sex=='M' and weight_diff>=0 and bmi>20.0: # Проверяем условие
-                weight_diff=str(weight_diff) # Преобразовываем значение weight_diff в строку
-                csv_writer.writerow(i+[weight_diff]) # Записываем в файл out_file все столбцы строки i, добавляя новый столбец 'Wight diff' с помощью метода writerow()
+with open ('result_kgs.csv', mode = 'w', newline='') as out_file: # Открываем новый файл 'result_kgs.csv' в режиме записи (mode = 'w') и с параметром newline='', который удаляет пустые строки между записями. Назначаем ему переменную out_file
+    csv_writer = csv.writer(out_file) # Создаем объект csv_writer, который будет записывать данные в файл out_file
+    csv_writer.writerow(header + ['Wight diff']) # Записываем в файл out_file заголовки столбцов из переменной header, добавляя новый столбец 'Wight diff' с помощью метода writerow()
+
+    if sex=='M' and weight_diff>=0 and bmi>20.0: # Проверяем условие
+        weight_diff=str(weight_diff) # Преобразовываем значение weight_diff в строку
+        csv_writer.writerow(i+[weight_diff]) # Записываем в файл out_file все столбцы строки i, добавляя новый столбец 'Wight diff' с помощью метода writerow()
 
 print('Results are in result_kgs.csv file') # Выводим сообщение
 
